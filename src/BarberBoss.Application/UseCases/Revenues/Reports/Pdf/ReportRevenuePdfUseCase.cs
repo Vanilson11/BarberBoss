@@ -77,6 +77,8 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
                 rowDescription.Cells[0].VerticalAlignment = VerticalAlignment.Center;
                 rowDescription.Cells[0].Format.LeftIndent = 20;
             }
+
+            AddWhiteSpace(table);
         }
 
         return RenderDocument(document);
@@ -195,6 +197,13 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
             PaymentType.Pix => ResourceReportsMessages.PIX,
             _ => string.Empty
         };
+    }
+
+    private void AddWhiteSpace(Table table)
+    {
+        var row = table.AddRow();
+        row.Height = HEIGHT_ROW_TABLE;
+        row.Borders.Visible = false;
     }
     private byte[] RenderDocument(Document document)
     {
