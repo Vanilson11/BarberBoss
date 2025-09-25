@@ -2,6 +2,7 @@ using BarberBoss.API.Fillters;
 using BarberBoss.API.Middlewares;
 using BarberBoss.Application;
 using BarberBoss.Infrastructure;
+using BarberBoss.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,4 +36,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await MigrateDataBase();
+
 app.Run();
+
+async Task MigrateDataBase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DataBaseMigration.MigrateDataBase(scope.ServiceProvider);
+}

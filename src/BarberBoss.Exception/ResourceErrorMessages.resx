@@ -120,6 +120,12 @@
   <data name="AMOUNT_LESS_THEN_OR_EQUAL_ZERO" xml:space="preserve">
     <value>Amount cannot be less then or equal to zero</value>
   </data>
+  <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
+    <value>E-mail already registered.</value>
+  </data>
+  <data name="INVALID_PASSWORD" xml:space="preserve">
+    <value>Sua senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial(ex: !, ?, *, #).</value>
+  </data>
   <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
     <value>Payment type invalid</value>
   </data>
