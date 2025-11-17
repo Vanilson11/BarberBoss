@@ -1,5 +1,7 @@
 ﻿using BarberBoss.Application.UseCases.Revenues.Reports.Excel;
 using BarberBoss.Application.UseCases.Revenues.Reports.Pdf;
+using BarberBoss.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
@@ -7,10 +9,12 @@ namespace BarberBoss.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = Roles.ADMIN)]
 public class ReportsController : ControllerBase
 {
     [HttpGet("excel")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetExcel([FromServices] IReportRevenuesExcelUseCase useCase,
         [FromHeader] DateOnly start,
@@ -26,6 +30,7 @@ public class ReportsController : ControllerBase
 
     [HttpGet("pdf")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetPdf([FromServices] IReportRevenuePdfUseCase useCase,
         [FromHeader] DateOnly start,

@@ -4,25 +4,30 @@ using BarberBoss.Domain;
 using ClosedXML.Excel;
 using BarberBoss.Domain.Enums;
 using BarberBoss.Domain.Entities;
+using BarberBoss.Domain.Services.LoggedUser;
 
 namespace BarberBoss.Application.UseCases.Revenues.Reports.Excel;
 public class ReportRevenuesExcelUseCase : IReportRevenuesExcelUseCase
 {
     private readonly IReportsReadOnlyRepository _repository;
+    private readonly ILoggedUser _loggedUser;
     private const string CURRENT_SYMBOL = "R$";
 
-    public ReportRevenuesExcelUseCase(IReportsReadOnlyRepository repository)
+    public ReportRevenuesExcelUseCase(IReportsReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
     }
     public async Task<byte[]> Execute(DateOnly start, DateOnly end)
     {
-        var revenues = await _repository.GetByWeek(start, end);
+        var loggedUser = await _loggedUser.Get();
+
+        var revenues = await _repository.GetByWeek(loggedUser, start, end);
 
         if (revenues.Count == 0)
             return [];
 
-        var workbook = CreateWorkBook();
+        var workbook = CreateWorkBook(loggedUser.Name);
         
         var worksheet = workbook.Worksheets.Add($"{start:yyyy-MM-dd} a {end:yyyy-MM-dd}");
         InsertHeaderWorkSheet(worksheet);
@@ -35,10 +40,10 @@ public class ReportRevenuesExcelUseCase : IReportRevenuesExcelUseCase
         return file.ToArray();
     }
 
-    private XLWorkbook CreateWorkBook()
+    private XLWorkbook CreateWorkBook(string author)
     {
         var workbook = new XLWorkbook();
-        workbook.Author = "Vanilson Sousa";
+        workbook.Author = author;
         workbook.Style.Font.FontName = "Times New Roman";
         workbook.Style.Font.FontSize = 12;
 

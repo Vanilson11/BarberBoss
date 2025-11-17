@@ -2,7 +2,7 @@
 using BarberBoss.Communication.Requests;
 using Bogus;
 
-namespace CommonTestsUtilities;
+namespace CommonTestsUtilities.Requests;
 public class RequestRevenuesJsonBuilder
 {
     public RequestRevenuesJson Build()

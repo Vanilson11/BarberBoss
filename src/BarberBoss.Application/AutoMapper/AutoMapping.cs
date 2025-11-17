@@ -23,5 +23,6 @@ public class AutoMapping : Profile
     {
         CreateMap<Revenue, ResponseShortRevenuesJson>();
         CreateMap<Revenue, ResponseRevenueJson>();
+        CreateMap<Revenue, ResponseRegisterRevenueJson>();
     }
 }

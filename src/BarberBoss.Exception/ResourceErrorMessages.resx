@@ -123,8 +123,20 @@
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
     <value>E-mail already registered.</value>
   </data>
+  <data name="EMAIL_EMPTY" xml:space="preserve">
+    <value>E-mail is required.</value>
+  </data>
+  <data name="EMAIL_INVALID" xml:space="preserve">
+    <value>E-mail invalid.</value>
+  </data>
+  <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+    <value>E-mail or passswor invalid.</value>
+  </data>
   <data name="INVALID_PASSWORD" xml:space="preserve">
     <value>Sua senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial(ex: !, ?, *, #).</value>
+  </data>
+  <data name="NAME_EMPTY" xml:space="preserve">
+    <value>Name is required.</value>
   </data>
   <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
     <value>Payment type invalid</value>

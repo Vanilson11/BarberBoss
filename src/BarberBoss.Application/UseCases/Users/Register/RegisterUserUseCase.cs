@@ -36,7 +36,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         await Validate(request);
 
         var user = _mapper.Map<User>(request);
-        user.Password = _passwordEncripter.Encrypt(user.Password);
+        user.Password = _passwordEncripter.Encrypt(request.Password);
         user.UserIdentifier = Guid.NewGuid();
 
         await _userWriteOnlyRepository.Add(user);
@@ -45,7 +45,6 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         return new ResponseRegisterUserJson()
         {
-            Id = user.Id,
             Name = user.Name,
             Token = _accessTokenGenerator.Generate(user)
         };

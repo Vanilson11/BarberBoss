@@ -5,16 +5,19 @@ using BarberBoss.Application.UseCases.Revenues.Register;
 using BarberBoss.Application.UseCases.Revenues.Update;
 using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberBoss.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class RevenuesController : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(ResponseRevenuesJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetAll([FromServices] IGetAllRevenuesUseCase useCase)
     {
         var response = await useCase.Execute();
@@ -25,6 +28,7 @@ public class RevenuesController : ControllerBase
     [HttpGet]
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseRevenueJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById([FromServices] IGetRevenueByIdUseCase useCase, [FromRoute] long id)
     {
@@ -35,6 +39,7 @@ public class RevenuesController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisterRevenueJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromServices] IRegisterRevenueUseCase useCase, [FromBody] RequestRevenuesJson request)
     {
@@ -46,6 +51,7 @@ public class RevenuesController : ControllerBase
     [HttpPut]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(
@@ -62,6 +68,7 @@ public class RevenuesController : ControllerBase
     [HttpDelete]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete([FromServices] IDeleteRevenueUseCase useCase, [FromRoute] long id)
     {

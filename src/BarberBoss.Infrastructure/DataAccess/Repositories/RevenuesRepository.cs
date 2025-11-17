@@ -14,33 +14,28 @@ internal class RevenueRepository : IWriteOnlyRevenueRepository, IReadOnlyRevenue
 
     public async Task Add(Revenue revenue) => await _dbContext.AddAsync(revenue);
 
-    async Task<Revenue?> IReadOnlyRevenueRepository.GetById(long id) => await _dbContext.Revenues.AsNoTracking().FirstOrDefaultAsync(revenue => revenue.Id == id);
+    async Task<Revenue?> IReadOnlyRevenueRepository.GetById(User user, long id) => await _dbContext.Revenues.AsNoTracking().FirstOrDefaultAsync(revenue => revenue.Id == id && revenue.UserId == user.Id);
 
-    public async Task<List<Revenue>> GetAllRevenues() => await _dbContext.Revenues.AsNoTracking().ToListAsync();
+    public async Task<List<Revenue>> GetAllRevenues(User user) => await _dbContext.Revenues.AsNoTracking().Where(revenue => revenue.UserId == user.Id).ToListAsync();
 
-    async Task<Revenue?> IUpdateOnlyRevenueRepository.GetById(long id) => await _dbContext.Revenues.FirstOrDefaultAsync(revenue =>revenue.Id == id);
+    async Task<Revenue?> IUpdateOnlyRevenueRepository.GetById(User user,long id) => await _dbContext.Revenues.FirstOrDefaultAsync(revenue => revenue.Id == id && revenue.UserId == user.Id);
 
     public void Update(Revenue revenue) => _dbContext.Revenues.Update(revenue);
 
-    public async Task<bool> Delete(long id)
+    public async Task Delete(long id)
     {
-        var revenue = await _dbContext.Revenues.FirstOrDefaultAsync(revenue => revenue.Id == id);
-
-        if (revenue is null)
-            return false;
+        var revenue = await _dbContext.Revenues.FirstAsync(revenue => revenue.Id == id);
 
         _dbContext.Revenues.Remove(revenue);
-
-        return true;
     }
 
-    public async Task<List<Revenue>> GetByWeek(DateOnly start, DateOnly end)
+    public async Task<List<Revenue>> GetByWeek(User user, DateOnly start, DateOnly end)
     {
         var startWeek = new DateTime(start.Year, start.Month, start.Day).Date;
         var endWeek = new DateTime(end.Year, end.Month, end.Day).Date;
 
         return await _dbContext.Revenues.AsNoTracking()
-            .Where(revenue => revenue.Date >= startWeek && revenue.Date <= endWeek)
+            .Where(revenue => revenue.UserId == user.Id && revenue.Date >= startWeek && revenue.Date <= endWeek)
             .OrderBy(revenue => revenue.Date)
             .ToListAsync();
     }

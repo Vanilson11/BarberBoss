@@ -124,7 +124,7 @@
     <value>Vanilson Sousa</value>
   </data>
   <data name="BARBER_NAME" xml:space="preserve">
-    <value>Barbearia do João</value>
+    <value>Barbearia do(a) {0}</value>
   </data>
   <data name="CASH" xml:space="preserve">
     <value>Dinheiro</value>

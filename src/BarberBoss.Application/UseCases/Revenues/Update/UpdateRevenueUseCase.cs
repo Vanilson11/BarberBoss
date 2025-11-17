@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
-using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Repositories;
+using BarberBoss.Domain.Services.LoggedUser;
 using BarberBoss.Exception;
 using BarberBoss.Exception.ExceptionsBase;
 
@@ -12,27 +12,35 @@ public class UpdateRevenueUseCase : IUpdateRevenueUseCase
     private readonly IUpdateOnlyRevenueRepository _repository;
     private readonly IUnitOffWork _unitOffWork;
     private readonly IMapper _mapper;
+    private readonly ILoggedUser _loggedUser;
 
-    public UpdateRevenueUseCase(IUpdateOnlyRevenueRepository repository, IUnitOffWork unitOffWork, IMapper mapper)
+    public UpdateRevenueUseCase(
+        IUpdateOnlyRevenueRepository repository, 
+        IUnitOffWork unitOffWork, 
+        IMapper mapper,
+        ILoggedUser loggedUser)
     {
         _mapper = mapper;
         _repository = repository;
         _unitOffWork = unitOffWork;
+        _loggedUser = loggedUser;
     }
     public async Task Execute(RequestRevenuesJson request, long id)
     {
         Validate(request);
 
-        var result = await _repository.GetById(id);
+        var loggedUser = await _loggedUser.Get();
 
-        if(result is null)
+        var revenue = await _repository.GetById(loggedUser, id);
+
+        if(revenue is null)
         {
             throw new NotFoundException(ResourceErrorMessages.REVENUE_NOT_FOUND);
         }
 
-        _mapper.Map(request, result);
+        _mapper.Map(request, revenue);
 
-        _repository.Update(result);
+        _repository.Update(revenue);
 
         await _unitOffWork.Commit();
     }

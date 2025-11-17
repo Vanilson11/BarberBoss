@@ -4,6 +4,7 @@ using BarberBoss.Domain;
 using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Enums;
 using BarberBoss.Domain.Repositories;
+using BarberBoss.Domain.Services.LoggedUser;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
@@ -16,23 +17,27 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
     private const string CURRENT_SYMBOL = "R$";
     private const int HEIGHT_ROW_TABLE = 20;
     private readonly IReportsReadOnlyRepository _repository;
-    public ReportRevenuePdfUseCase(IReportsReadOnlyRepository repository)
+    private readonly ILoggedUser _loggedUser;
+    public ReportRevenuePdfUseCase(IReportsReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
+        _loggedUser = loggedUser;
         GlobalFontSettings.FontResolver = new RevenuesFontResolver();
     }
     public async Task<byte[]> Execute(DateOnly startWeek, DateOnly endWeek)
     {
-        var revenues = await _repository.GetByWeek(startWeek, endWeek);
+        var loggedUser = await _loggedUser.Get();
+
+        var revenues = await _repository.GetByWeek(loggedUser, startWeek, endWeek);
 
         if (revenues.Count == 0)
             return [];
 
-        var document = CreateDocument();
+        var document = CreateDocument(loggedUser.Name);
 
         var section = AddAndConfigSection(document);
 
-        CreateTableHeader(section);
+        CreateTableHeader(section, loggedUser.Name);
 
         var paragraph = section.AddParagraph();
         InsertTitleOnPage(paragraph, revenues);
@@ -59,7 +64,7 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
             row.Cells[2].AddParagraph(ConvertPaymentType(revenue.PaymentType));
             SetStyleForRowRevenueInformation(row.Cells[2]);
 
-            row.Cells[3].AddParagraph($"{CURRENT_SYMBOL} {revenue.Amount}");
+            row.Cells[3].AddParagraph($"{CURRENT_SYMBOL} {revenue.Amount:f2}");
             row.Cells[3].Format.Font = new Font { Name = FontsHelper.ROBOTO_REGULAR, Size = 10, Color = ColorsHelper.BLACK };
             row.Cells[3].Shading.Color = ColorsHelper.WHITE;
             row.Cells[3].VerticalAlignment = VerticalAlignment.Center;
@@ -84,10 +89,10 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
         return RenderDocument(document);
     }
 
-    private Document CreateDocument()
+    private Document CreateDocument(string author)
     {
         var document = new Document();
-        document.Info.Author = "Vanilson Sousa";
+        document.Info.Author = author;
         document.Info.Title = ResourceReportsMessages.REPORT_REVENUES_OFF_WEEK;
 
         var style = document.Styles["Normal"];
@@ -111,13 +116,13 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
         return page;
     }
 
-    private void CreateTableHeader(Section section)
+    private void CreateTableHeader(Section section, string name)
     {
         var table = section.AddTable();
-        InsertHeaderWithLogoAndText(table);
+        InsertHeaderWithLogoAndText(table, name);
     }
 
-    private void InsertHeaderWithLogoAndText(Table table)
+    private void InsertHeaderWithLogoAndText(Table table, string name)
     {
         table.AddColumn();
         table.AddColumn("300");
@@ -129,7 +134,8 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
         var pathFile = Path.Combine(directoryName!, "Logo", "barber-logo2.png");
 
         row.Cells[0].AddImage(pathFile);
-        row.Cells[1].AddParagraph(ResourceReportsMessages.BARBER_NAME);
+        var barberName = string.Format(ResourceReportsMessages.BARBER_NAME, name);
+        row.Cells[1].AddParagraph(barberName);
         row.Cells[1].Format.LeftIndent = 20;
         row.Cells[1].Format.Font = new Font { Name = FontsHelper.BEBAS_NEUE_REGULAR, Size = 25 };
         row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
@@ -145,7 +151,7 @@ public class ReportRevenuePdfUseCase : IReportRevenuePdfUseCase
 
         var totAmountRevenues = revenues.Sum(revenue => revenue.Amount);
 
-        paragraph.AddFormattedText($"{CURRENT_SYMBOL} {totAmountRevenues}", new Font { Name = FontsHelper.BEBAS_NEUE_REGULAR, Size = 50 });
+        paragraph.AddFormattedText($"{CURRENT_SYMBOL} {totAmountRevenues:f2}", new Font { Name = FontsHelper.BEBAS_NEUE_REGULAR, Size = 50 });
         paragraph.Format.SpaceAfter = "64";
     }
 

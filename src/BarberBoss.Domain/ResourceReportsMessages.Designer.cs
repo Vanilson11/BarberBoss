@@ -79,7 +79,7 @@ namespace BarberBoss.Domain {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Barber off John.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Barber off {0}.
         /// </summary>
         public static string BARBER_NAME {
             get {

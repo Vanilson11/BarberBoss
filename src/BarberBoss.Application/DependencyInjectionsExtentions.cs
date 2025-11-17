@@ -1,4 +1,5 @@
 ﻿using BarberBoss.Application.AutoMapper;
+using BarberBoss.Application.UseCases.DoLogin;
 using BarberBoss.Application.UseCases.Revenues.Delete;
 using BarberBoss.Application.UseCases.Revenues.GetAll;
 using BarberBoss.Application.UseCases.Revenues.GetById;
@@ -7,6 +8,7 @@ using BarberBoss.Application.UseCases.Revenues.Reports.Excel;
 using BarberBoss.Application.UseCases.Revenues.Reports.Pdf;
 using BarberBoss.Application.UseCases.Revenues.Update;
 using BarberBoss.Application.UseCases.Users.Register;
+using BarberBoss.Domain.Security.Tokens;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BarberBoss.Application;
@@ -33,5 +35,6 @@ public static class DependencyInjectionsExtentions
         services.AddScoped<IReportRevenuesExcelUseCase, ReportRevenuesExcelUseCase>();
         services.AddScoped<IReportRevenuePdfUseCase, ReportRevenuePdfUseCase>();
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
     }
 }

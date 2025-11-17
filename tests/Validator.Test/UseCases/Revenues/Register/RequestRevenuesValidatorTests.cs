@@ -1,6 +1,6 @@
 ﻿using BarberBoss.Application.UseCases.Revenues;
 using BarberBoss.Exception;
-using CommonTestsUtilities;
+using CommonTestsUtilities.Requests;
 using Shouldly;
 
 namespace ValidatorTests;
