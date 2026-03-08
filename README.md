@@ -1,9 +1,14 @@
 ## Sobre o projeto
 
-Esta API, desenvolvida utilizando **.NET 8**, adota os princípios do **Domain-Driven Design (DDD)** para oferecer uma solução estruturada e eficaz no gerenciamento de faturamentos de uma barbearia. O principal objetivo é permitir que os usuários registrem seus faturamentos, detalhando informações como título, data e hora, descrição, valor e tipo de pagamento, com os dados sendo armazenados de forma segura em um banco de dados **MySQL**.
-A arquitetura da API baseia-se em **REST**, utilizando métodos **HTTP** padrão para uma comunicação eficiente e simplificada.
-Além disso, é complementada por uma documentação **Swagger**, que proporciona uma interface gráfica interativa para que os desenvolvedores possam explorar e testar os endpoints de maneira fácil.
-Dentre os pacotes **NuGet** utilizados, o **AutoMapper** é o responsável pelo mapeamento entre objetos de domínio e requisição/resposta, reduzindo a necessidade de código repetitivo e manual. Para as validações, o **FluentValidation** é usado para implementar regras de validação de forma simples e intuitiva nas classes de requisições, mantendo o código limpo e fácil de manter. Por fim, o **EntityFramework** atua como um ORM (Object-Relational Mapper) que simplifica as interações com o banco de dados, permitindo o uso de objetos .NET para manipular dados diretamente, sem a necessidade de lidar com consultas SQL.
+Esta API, desenvolvida utilizando .NET 8, adota os princípios do Domain-Driven Design (DDD) para oferecer uma solução estruturada e eficaz no gerenciamento de faturamentos de uma barbearia. O principal objetivo é permitir que os usuários registrem seus faturamentos, detalhando informações como título, data e hora, descrição, valor e tipo de pagamento, com os dados sendo armazenados de forma segura em um banco de dados MySQL.
+
+A arquitetura da API baseia-se em REST, utilizando métodos HTTP padrão para uma comunicação eficiente e simplificada.
+
+Além disso, é complementada por uma documentação Swagger, que proporciona uma interface gráfica interativa para que os desenvolvedores possam explorar e testar os endpoints de maneira fácil.
+
+Para garantir a segurança da aplicação, a API utiliza autenticação baseada em tokens JWT (JSON Web Token), permitindo que apenas usuários autenticados possam acessar os recursos protegidos do sistema. Também foram implementadas autorizações nos endpoints, garantindo que apenas usuários com permissões adequadas possam executar determinadas operações.
+
+Dentre os pacotes NuGet utilizados, o AutoMapper é responsável pelo mapeamento entre objetos de domínio e requisição/resposta, reduzindo a necessidade de código repetitivo e manual. Para as validações, o FluentValidation é usado para implementar regras de validação de forma simples e intuitiva nas classes de requisições, mantendo o código limpo e fácil de manter. Por fim, o EntityFramework atua como um ORM (Object-Relational Mapper) que simplifica as interações com o banco de dados, permitindo o uso de objetos .NET para manipular dados diretamente, sem a necessidade de lidar com consultas SQL.
 
 ![hero-image]
 
@@ -11,7 +16,10 @@ Dentre os pacotes **NuGet** utilizados, o **AutoMapper** é o responsável pelo 
 As principais funcionalidades do projeto são:
 
 - **Domain-Driven Design (DDD)**: Estrutura modular que facilita o entendimento e a manutenção do domínio da aplicação.
+- **Autenticação com JWT**: Sistema seguro de autenticação utilizando tokens para controle de acesso.
+- **Autorização em Endpoints**: Controle de permissões para garantir que apenas usuários autorizados executem determinadas ações.
 - **Testes de Unidade**: Testes abrangentes com **FluentValidation** para garantir a funcionalidade e a qualidade.
+- **Testes de Integração**: Garantem que os componentes da aplicação funcionem corretamente quando integrados.
 - **Geração de Relatórios**: Capacidade de exportar relatórios detalhados para **PDF** e **Excel**, oferecendo uma análise visual e eficaz dos faturamentos.
 - **RESTful API com Documentação Swagger**: Interface documentada que facilita a integração e o teste por parte dos desenvolvedores.
 
@@ -50,4 +58,5 @@ Para obter uma cópia local funcionando, siga estes passos simples.
 <!-- Badges -->
 [dot-net-badge]: https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff&style=flat-square
 [mysql-badge]: https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff&style=flat-square
+
 [swagger-badge]: https://img.shields.io/badge/Swagger-85EA2D?logo=swagger&logoColor=000&style=flat-square
