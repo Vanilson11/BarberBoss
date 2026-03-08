@@ -53,7 +53,7 @@ namespace BarberBoss.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Revenues", (string)null);
+                    b.ToTable("Revenues");
                 });
 
             modelBuilder.Entity("BarberBoss.Domain.Entities.User", b =>
@@ -63,6 +63,9 @@ namespace BarberBoss.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -80,12 +83,15 @@ namespace BarberBoss.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<Guid>("UserIdentifier")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BarberBoss.Domain.Entities.Revenue", b =>

@@ -16,14 +16,14 @@ public class RegisterUserUseCaseTests
         var mapper = AutoMappingBuilder.Build();
         var passwordEnrypter = new PasswordEncrypterBuilder().Build();
         var readOnlyReposiotory = new ReadOnlyUsersRepositoryBuilder().EmailExists(email!).Build();
-        var writeOnlyRepository = WriteOnlyUsersRepositoryBuilder.Build();
+        var writeOnlyRepository = new WriteOnlyUsersRepositoryBuilder().Build();
         var unitOffWork = UnitOffWorkBuilder.Build();
         var tokenGenerator = TokenGeneratorBuilder.Build();
 
         return new RegisterUserUseCase(mapper, passwordEnrypter, readOnlyReposiotory, writeOnlyRepository, unitOffWork, tokenGenerator);
     }
 
-    private RequestUserJson CreateRequest()
+    private RequestRegisterUserJson CreateRequest()
     {
         return RequestUserJsonBuilder.Build();
     }
@@ -55,6 +55,22 @@ public class RegisterUserUseCaseTests
 
         var errorMessage = result.GetErrors().FirstOrDefault();
         errorMessage.ShouldBe(ResourceErrorMessages.NAME_EMPTY);
+    }
+
+    [Fact]
+    public async void Error_Created_At_Be_The_Future()
+    {
+        var request = CreateRequest();
+        request.CreatedAt = DateTime.UtcNow.AddDays(1);
+        var useCase = CreateUseCase();
+
+        var act = async () => await useCase.Execute(request);
+
+        var result = await act.ShouldThrowAsync<ErrorsOnValidationException>();
+        result.GetErrors().Count.ShouldBe(1);
+
+        var errorMessage = result.GetErrors().FirstOrDefault();
+        errorMessage.ShouldBe(ResourceErrorMessages.CREATED_AT_CANNOT_BE_THE_FUTURE);
     }
 
     [Fact]

@@ -4,5 +4,5 @@ using BarberBoss.Communication.Responses;
 namespace BarberBoss.Application.UseCases.Users.Register;
 public interface IRegisterUserUseCase
 {
-    Task<ResponseRegisterUserJson> Execute(RequestUserJson request);
+    Task<ResponseRegisterUserJson> Execute(RequestRegisterUserJson request);
 }

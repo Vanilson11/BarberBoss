@@ -12,7 +12,7 @@ public class PasswordEncrypterBuilder
         _mock.Setup(passwordEncrypter => passwordEncrypter.Encrypt(It.IsAny<string>())).Returns("string_criptograph");
     }
 
-    public PasswordEncrypterBuilder Verify(string password)
+    public PasswordEncrypterBuilder Verify(string? password)
     {
         if(string.IsNullOrWhiteSpace(password) == false)
         {

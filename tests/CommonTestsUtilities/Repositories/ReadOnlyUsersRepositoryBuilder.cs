@@ -12,7 +12,17 @@ public class ReadOnlyUsersRepositoryBuilder
         _mock = new Mock<IReadOnlyUsersRepository>();
     }
 
-    public ReadOnlyUsersRepositoryBuilder EmailExists(string email)
+    public ReadOnlyUsersRepositoryBuilder GetById(User? user)
+    {
+        if(user is not null)
+        {
+            _mock.Setup(readOnlyRepository => readOnlyRepository.GetById(user.Id)).ReturnsAsync(user);
+        }
+
+        return this;
+    }
+
+    public ReadOnlyUsersRepositoryBuilder EmailExists(string? email)
     {
         if(string.IsNullOrWhiteSpace(email) == false)
         {

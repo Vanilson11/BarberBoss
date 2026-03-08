@@ -1,13 +1,28 @@
-﻿using BarberBoss.Domain.Repositories;
+﻿using BarberBoss.Domain.Entities;
+using BarberBoss.Domain.Repositories;
 using Moq;
 
 namespace CommonTestsUtilities.Repositories;
 public class WriteOnlyUsersRepositoryBuilder
 {
-    public static IWriteOnlyUsersRepository Build()
-    {
-        var mock = new Mock<IWriteOnlyUsersRepository>();
+    private readonly Mock<IWriteOnlyUsersRepository> _mock;
 
-        return mock.Object;
+    public WriteOnlyUsersRepositoryBuilder()
+    {
+        _mock = new Mock<IWriteOnlyUsersRepository>();
+    }
+
+    public WriteOnlyUsersRepositoryBuilder Delete(User? user)
+    {
+        if(user is not null)
+        {
+            _mock.Setup(repository => repository.Delete(user.Id)).ReturnsAsync(true);
+        }
+
+        return this;
+    }
+    public IWriteOnlyUsersRepository Build()
+    {
+        return _mock.Object;
     }
 }

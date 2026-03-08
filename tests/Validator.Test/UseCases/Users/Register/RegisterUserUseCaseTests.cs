@@ -7,7 +7,7 @@ using Shouldly;
 namespace Validator.Test.UseCases.Users.Register;
 public class RegisterUserUseCaseTests
 {
-    private RequestUserJson CreateRequest()
+    private RequestRegisterUserJson CreateRequest()
     {
         return RequestUserJsonBuilder.Build();
     }
@@ -67,5 +67,18 @@ public class RegisterUserUseCaseTests
 
         result.IsValid.ShouldBeFalse();
         result.Errors.Single().ShouldSatisfyAllConditions(erro => erro.ErrorMessage.Equals(ResourceErrorMessages.EMAIL_INVALID));
+    }
+
+    [Fact]
+    public void Error_Created_At_Cannot_Be_The_Future()
+    {
+        var validator = CreateValidator();
+        var request = CreateRequest();
+        request.CreatedAt = DateTime.UtcNow.AddDays(1);
+
+        var result = validator.Validate(request);
+
+        result.IsValid.ShouldBeFalse();
+        result.Errors.Single().ShouldSatisfyAllConditions(erro => erro.ErrorMessage.Equals(ResourceErrorMessages.CREATED_AT_CANNOT_BE_THE_FUTURE));
     }
 }

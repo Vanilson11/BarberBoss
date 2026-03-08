@@ -3,6 +3,7 @@ using BarberBoss.Communication.Responses;
 using BarberBoss.Domain.Repositories;
 using BarberBoss.Domain.Security.Criptography;
 using BarberBoss.Domain.Security.Tokens;
+using BarberBoss.Exception;
 using BarberBoss.Exception.ExceptionsBase;
 
 namespace BarberBoss.Application.UseCases.DoLogin;
@@ -27,14 +28,14 @@ public class DoLoginUseCase : IDoLoginUseCase
 
         if(user is null)
         {
-            throw new InvalidLoginException();
+            throw new InvalidLoginException(ResourceErrorMessages.INVALID_LOGIN);
         }
 
         var passwordMatch = _passwordEncripter.Verify(request.Password, user.Password);
 
         if(passwordMatch is false)
         {
-            throw new InvalidLoginException();
+            throw new InvalidLoginException(ResourceErrorMessages.INVALID_LOGIN);
         }
 
         return new ResponseRegisterUserJson()

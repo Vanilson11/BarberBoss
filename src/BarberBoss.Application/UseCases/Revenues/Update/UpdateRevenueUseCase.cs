@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BarberBoss.Communication.Requests;
-using BarberBoss.Communication.Responses;
 using BarberBoss.Domain.Repositories;
 using BarberBoss.Domain.Services.LoggedUser;
 using BarberBoss.Exception;
@@ -53,7 +52,6 @@ public class UpdateRevenueUseCase : IUpdateRevenueUseCase
         if(result.IsValid is false)
         {
             var errorMessages = result.Errors.Select(errorMessage => errorMessage.ErrorMessage).ToList();
-            var responseErrorMessages = new ResponseErrorMessagesJson(errorMessages);
 
             throw new ErrorsOnValidationException(errorMessages);
         }

@@ -50,7 +50,6 @@ public class RegisterRevenueUseCase : IRegisterRevenueUseCase
         if(result.IsValid is false)
         {
             var errorMessages = result.Errors.Select(errorMessage => errorMessage.ErrorMessage).ToList();
-            var errorMessagesResponse = new ResponseErrorMessagesJson(errorMessages);
 
             throw new ErrorsOnValidationException(errorMessages);
         }

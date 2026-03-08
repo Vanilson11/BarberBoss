@@ -31,12 +31,14 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         _unitOffWork = unitOffWork;
         _accessTokenGenerator = accessTokenGenerator;
     }
-    public async Task<ResponseRegisterUserJson> Execute(RequestUserJson request)
+    public async Task<ResponseRegisterUserJson> Execute(RequestRegisterUserJson request)
     {
         await Validate(request);
 
         var user = _mapper.Map<User>(request);
+
         user.Password = _passwordEncripter.Encrypt(request.Password);
+
         user.UserIdentifier = Guid.NewGuid();
 
         await _userWriteOnlyRepository.Add(user);
@@ -50,7 +52,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         };
     }
 
-    private async Task Validate(RequestUserJson request) { 
+    private async Task Validate(RequestRegisterUserJson request) { 
         var result = new UserUseCaseValidator().Validate(request);
         var emailExists = await _userReadOnlyRepository.EmailExists(request.Email);
 
@@ -62,7 +64,6 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         if(result.IsValid == false)
         {
             var errorMessages = result.Errors.Select(errorMessage => errorMessage.ErrorMessage).ToList();
-            //var errorResponse = new ResponseErrorMessagesJson(errorMessages);
 
             throw new ErrorsOnValidationException(errorMessages);
         }

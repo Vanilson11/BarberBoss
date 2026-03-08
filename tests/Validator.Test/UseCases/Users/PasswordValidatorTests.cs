@@ -7,16 +7,28 @@ using Shouldly;
 namespace Validator.Test.UseCases.Users;
 public class PasswordValidatorTests
 {
-    private PasswordValidator<RequestUserJson> CreateValidator()
+    private PasswordValidator<RequestRegisterUserJson> CreateValidator()
     {
-        return new PasswordValidator<RequestUserJson>();
+        return new PasswordValidator<RequestRegisterUserJson>();
     }
-    private RequestUserJson CreateRequest() => RequestUserJsonBuilder.Build();
+    private RequestRegisterUserJson CreateRequest() => RequestUserJsonBuilder.Build();
 
     [Theory]
     [InlineData("")]
     [InlineData("    ")]
     [InlineData(null)]
+    public void Error_Password_Empty(string password)
+    {
+        var validator = CreateValidator();
+        var request = CreateRequest();
+        request.Password = password;
+
+        var result = validator.IsValid(new ValidationContext<RequestRegisterUserJson>(new RequestRegisterUserJson()), password);
+
+        result.ShouldBeFalse();
+    }
+
+    [Theory]
     [InlineData("a")]
     [InlineData("aa")]
     [InlineData("aaa")]
@@ -28,13 +40,13 @@ public class PasswordValidatorTests
     [InlineData("AAAAAAAA")]
     [InlineData("Aaaaaaaa")]
     [InlineData("Aaaaaaa1")]
-    public void Error_Password_Empty(string password)
+    public void Error_Password_Invalid(string password)
     {
         var validator = CreateValidator();
         var request = CreateRequest();
         request.Password = password;
 
-        var result = validator.IsValid(new ValidationContext<RequestUserJson>(new RequestUserJson()), password);
+        var result = validator.IsValid(new ValidationContext<RequestRegisterUserJson>(new RequestRegisterUserJson()), password);
 
         result.ShouldBeFalse();
     }

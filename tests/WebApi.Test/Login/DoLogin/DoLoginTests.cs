@@ -21,9 +21,9 @@ public class DoLoginTests : IClassFixture<CustomWebApplicationFactory>
     public DoLoginTests(CustomWebApplicationFactory webApplicationFactory)
     {
         _httpClient = webApplicationFactory.CreateClient();
-        _email = webApplicationFactory.GetEmail();
-        _password = webApplicationFactory.GetPassword();
-        _name = webApplicationFactory.GetName();
+        _email = webApplicationFactory.User.GetEmail();
+        _password = webApplicationFactory.User.GetPassword();
+        _name = webApplicationFactory.User.GetName();
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class DoLoginTests : IClassFixture<CustomWebApplicationFactory>
 
         var errors = response.RootElement.GetProperty("errorMessages").EnumerateArray();
 
-        var expectedMessage = ResourceErrorMessages.ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID", new CultureInfo(cultureInfo));
+        var expectedMessage = ResourceErrorMessages.ResourceManager.GetString("INVALID_LOGIN", new CultureInfo(cultureInfo));
 
         errors.Single().ShouldSatisfyAllConditions(error => error.GetString().ShouldBe(expectedMessage));
     }

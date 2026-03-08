@@ -51,7 +51,7 @@ public class DoLoginUseCaseTests
         var result = await act.ShouldThrowAsync<InvalidLoginException>();
         result.GetErrors().Count.ShouldBe(1);
         var errorMessage = result.GetErrors().FirstOrDefault();
-        errorMessage.ShouldBe(ResourceErrorMessages.EMAIL_OR_PASSWORD_INVALID);
+        errorMessage.ShouldBe(ResourceErrorMessages.INVALID_LOGIN);
     }
 
     [Fact]
@@ -67,6 +67,6 @@ public class DoLoginUseCaseTests
         var result = await act.ShouldThrowAsync<InvalidLoginException>();
         result.GetErrors().Count.ShouldBe(1);
         var errorMessage = result.GetErrors().FirstOrDefault();
-        errorMessage.ShouldBe(ResourceErrorMessages.EMAIL_OR_PASSWORD_INVALID);
+        errorMessage.ShouldBe(ResourceErrorMessages.INVALID_LOGIN);
     }
 }

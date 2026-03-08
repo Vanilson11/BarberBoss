@@ -17,7 +17,7 @@ public class RegisterUserTest : IClassFixture<CustomWebApplicationFactory>
     public RegisterUserTest(CustomWebApplicationFactory webApplication)
     {
         _httpClient = webApplication.CreateClient();
-        _email = webApplication.GetEmail();
+        _email = webApplication.User.GetEmail();
     }
 
     [Fact]

@@ -120,6 +120,9 @@
   <data name="AMOUNT_LESS_THEN_OR_EQUAL_ZERO" xml:space="preserve">
     <value>Valor não pode ser menor ou igual a zero</value>
   </data>
+  <data name="CREATED_AT_CANNOT_BE_THE_FUTURE" xml:space="preserve">
+    <value>Data de criação do usuário não pode ser do futuro.</value>
+  </data>
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
     <value>E-mail já existe.</value>
   </data>
@@ -132,11 +135,26 @@
   <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
     <value>E-mail ou senha inválido.</value>
   </data>
+  <data name="INVALID_LOGIN" xml:space="preserve">
+    <value>E-mail e/ou senha inválidos.</value>
+  </data>
   <data name="INVALID_PASSWORD" xml:space="preserve">
     <value>Sua senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial(ex: !, ?, *, #).</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Nome é obrigatório</value>
+  </data>
+  <data name="NAME_MAX_LENGTH" xml:space="preserve">
+    <value>O nome não pode ter mais de cem caracters.</value>
+  </data>
+  <data name="NAME_MIN_LENGTH" xml:space="preserve">
+    <value>O nome não pode ter menos de dois caracteres.</value>
+  </data>
+  <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
+    <value>A senha informada é diferente da senha atual.</value>
+  </data>
+  <data name="PASSWORD_EMPTY" xml:space="preserve">
+    <value>A senha é obrigatória.</value>
   </data>
   <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
     <value>Tipo de pagamento inválido</value>
@@ -147,10 +165,22 @@
   <data name="REVENUE_NOT_FOUND" xml:space="preserve">
     <value>Faturamento não encontrado</value>
   </data>
+  <data name="ROLE_EMPTY" xml:space="preserve">
+    <value>A permissão do usuário é obrigatória.</value>
+  </data>
+  <data name="ROLE_INVALID" xml:space="preserve">
+    <value>Tipo de permissão inválida.</value>
+  </data>
   <data name="TITLE_REQUIRED" xml:space="preserve">
     <value>Título do faturamento é obrigatório</value>
   </data>
   <data name="UNKNOW_ERROR" xml:space="preserve">
     <value>Erro desconhecido</value>
+  </data>
+  <data name="UPDATED_DATE_USER_CANNOT_BE_THE_FUTURE" xml:space="preserve">
+    <value>Data de atualização do usuário não pode ser do futuro.</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>Usuário não encontrado.</value>
   </data>
 </root>

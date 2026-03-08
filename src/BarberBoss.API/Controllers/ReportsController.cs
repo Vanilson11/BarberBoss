@@ -17,8 +17,8 @@ public class ReportsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetExcel([FromServices] IReportRevenuesExcelUseCase useCase,
-        [FromHeader] DateOnly start,
-        [FromHeader] DateOnly end)
+        [FromQuery] DateOnly start,
+        [FromQuery] DateOnly end)
     {
         byte[] file = await useCase.Execute(start, end);
 
@@ -33,8 +33,8 @@ public class ReportsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetPdf([FromServices] IReportRevenuePdfUseCase useCase,
-        [FromHeader] DateOnly start,
-        [FromHeader] DateOnly end)
+        [FromQuery] DateOnly start,
+        [FromQuery] DateOnly end)
     {
         byte[] file = await useCase.Execute(start, end);
 

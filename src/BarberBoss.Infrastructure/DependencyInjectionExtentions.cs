@@ -49,6 +49,7 @@ public static class DependencyInjectionExtentions
         services.AddScoped<IReportsReadOnlyRepository, RevenueRepository>();
         services.AddScoped<IReadOnlyUsersRepository, UsersRepository>();
         services.AddScoped<IWriteOnlyUsersRepository, UsersRepository>();
+        services.AddScoped<IUpdateOnlyUsersRepository, UsersRepository>();
 
         services.AddScoped<IPasswordEncripter, Secutity.Criptography.BCrypt>();
         services.AddScoped<ILoggedUser, LoggedUser>();

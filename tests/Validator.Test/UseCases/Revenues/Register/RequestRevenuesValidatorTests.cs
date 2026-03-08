@@ -9,7 +9,7 @@ public class RequestRevenuesValidatorTests
     [Fact]
     public void Success()
     {
-        var request = new RequestRevenuesJsonBuilder().Build();
+        var request = RequestRevenuesJsonBuilder.Build();
         var validator = new RevenueUseCaseValidator();
 
         var result = validator.Validate(request);
@@ -20,7 +20,7 @@ public class RequestRevenuesValidatorTests
     [Fact]
     public void Error_Title_Empty()
     {
-        var request = new RequestRevenuesJsonBuilder().Build();
+        var request = RequestRevenuesJsonBuilder.Build();
         var validator = new RevenueUseCaseValidator();
         request.Title = string.Empty;
 
@@ -34,7 +34,7 @@ public class RequestRevenuesValidatorTests
     [Fact]
     public void Error_Date_For_The_Future()
     {
-        var request = new RequestRevenuesJsonBuilder().Build();
+        var request = RequestRevenuesJsonBuilder.Build();
         var validator = new RevenueUseCaseValidator();
         request.Date = DateTime.UtcNow.AddDays(1);
 
@@ -52,7 +52,7 @@ public class RequestRevenuesValidatorTests
     [InlineData(6)]
     public void Error_PaymentType_Invalid(int paymentType)
     {
-        var request = new RequestRevenuesJsonBuilder().Build();
+        var request = RequestRevenuesJsonBuilder.Build();
         var validator = new RevenueUseCaseValidator();
         request.PaymentType = (BarberBoss.Communication.Enums.PaymentType)paymentType;
 
@@ -69,7 +69,7 @@ public class RequestRevenuesValidatorTests
     [InlineData(-10)]
     public void Error_Amount_Invalid(decimal amount)
     {
-        var request = new RequestRevenuesJsonBuilder().Build();
+        var request = RequestRevenuesJsonBuilder.Build();
         var validator = new RevenueUseCaseValidator();
         request.Amount = amount;
 

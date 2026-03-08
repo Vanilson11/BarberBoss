@@ -5,7 +5,7 @@ using Bogus;
 namespace CommonTestsUtilities.Requests;
 public class RequestRevenuesJsonBuilder
 {
-    public RequestRevenuesJson Build()
+    public static RequestRevenuesJson Build()
     {
         return new Faker<RequestRevenuesJson>()
             .RuleFor(revenue => revenue.Title, faker => faker.Commerce.ProductName())

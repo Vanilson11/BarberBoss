@@ -19,7 +19,7 @@ namespace BarberBoss.Exception {
     // através de uma ferramenta como ResGen ou Visual Studio.
     // Para adicionar ou remover um associado, edite o arquivo .ResX e execute ResGen novamente
     // com a opção /str, ou recrie o projeto do VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ResourceErrorMessages {
@@ -70,6 +70,15 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Date off created user cannot be the future..
+        /// </summary>
+        public static string CREATED_AT_CANNOT_BE_THE_FUTURE {
+            get {
+                return ResourceManager.GetString("CREATED_AT_CANNOT_BE_THE_FUTURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail already registered..
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
@@ -106,6 +115,15 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail and/or password invalid..
+        /// </summary>
+        public static string INVALID_LOGIN {
+            get {
+                return ResourceManager.GetString("INVALID_LOGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Sua senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial(ex: !, ?, *, #)..
         /// </summary>
         public static string INVALID_PASSWORD {
@@ -120,6 +138,42 @@ namespace BarberBoss.Exception {
         public static string NAME_EMPTY {
             get {
                 return ResourceManager.GetString("NAME_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Name cannot have more than one hundred characters..
+        /// </summary>
+        public static string NAME_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("NAME_MAX_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Name cannot have less the two characters..
+        /// </summary>
+        public static string NAME_MIN_LENGTH {
+            get {
+                return ResourceManager.GetString("NAME_MIN_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Password different current password..
+        /// </summary>
+        public static string PASSWORD_DIFFERENT_CURRENT_PASSWORD {
+            get {
+                return ResourceManager.GetString("PASSWORD_DIFFERENT_CURRENT_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Password is required..
+        /// </summary>
+        public static string PASSWORD_EMPTY {
+            get {
+                return ResourceManager.GetString("PASSWORD_EMPTY", resourceCulture);
             }
         }
         
@@ -151,6 +205,24 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Role is required..
+        /// </summary>
+        public static string ROLE_EMPTY {
+            get {
+                return ResourceManager.GetString("ROLE_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Role invalid..
+        /// </summary>
+        public static string ROLE_INVALID {
+            get {
+                return ResourceManager.GetString("ROLE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Title revenue is required.
         /// </summary>
         public static string TITLE_REQUIRED {
@@ -165,6 +237,24 @@ namespace BarberBoss.Exception {
         public static string UNKNOW_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOW_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Date off updated user cannot be the future..
+        /// </summary>
+        public static string UPDATED_DATE_USER_CANNOT_BE_THE_FUTURE {
+            get {
+                return ResourceManager.GetString("UPDATED_DATE_USER_CANNOT_BE_THE_FUTURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a User not found..
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
             }
         }
     }
