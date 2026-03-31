@@ -4,18 +4,19 @@ using BarberBoss.API.Tokens;
 using BarberBoss.Application;
 using BarberBoss.Domain.Security.Tokens;
 using BarberBoss.Infrastructure;
+using BarberBoss.Infrastructure.DataAccess;
 using BarberBoss.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(config =>
 {
@@ -73,9 +74,20 @@ builder.Services.AddAuthentication(config => {
     };
 });
 
+builder.Services.AddHealthChecks().AddDbContextCheck<BarberBossDbContext>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResultStatusCodes =
+    {
+        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+    }
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
